@@ -150,7 +150,7 @@ if STORAGE_DESTINATION == 's3':
     ]
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    STATIC_ROOT = 'static'
+    STATIC_ROOT = 'https://vrticconnect-bucket.s3.eu-north-1.amazonaws.com/static/'
     
     # public media settings
     PUBLIC_MEDIA_LOCATION = 'media'
