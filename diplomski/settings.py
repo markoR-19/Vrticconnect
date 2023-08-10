@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY_DJ')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [".herokuapp.com"]
+ALLOWED_HOSTS = ["https://vrticconnect-66bb4e19c6c4.herokuapp.com"]
 
 
 # Application definition
