@@ -9,3 +9,4 @@ Twisted==22.10.0
 attrs==23.1.0
 boto3==1.28.21
 django-storages==1.13.2
+django-on-heroku==1.1.2
