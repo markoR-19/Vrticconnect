@@ -32,8 +32,9 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://https://vrticconnect-66bb4e19c6c4.herokuapp.com/accounts/login/',
-                        'http://https://vrticconnect-66bb4e19c6c4.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://https://vrticconnect-66bb4e19c6c4.herokuapp.com/accounts/login/',
+                        'https://vrticconnect-66bb4e19c6c4.herokuapp.com',
+                        'https://vrticconnect-66bb4e19c6c4.herokuapp.com']
 
 # Application definition
 
