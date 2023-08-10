@@ -1,0 +1,18 @@
+{% load widget_tweaks %}
+    <div class="align-items-center justify-content-center p-4 pb-3 mb-2" >
+        <form method="post" class="text-center" enctype="multipart/form-data" hx-target="closest table" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {% csrf_token %}
+        {% if form.errors %}
+            <h3>Greska.</h3>
+        {% endif %}
+        <div class="text-center">
+            {% render_field form.Naziv placeholder="Naziv aktivnosti" class="form-control text-center"%}
+        </div>
+        <div class="mt-1 text-centerdate">
+            {% render_field form.Datum_aktivnosti placeholder="Datum aktivnosti" type="date" class="form-control text-center"%}
+        </div>
+        <button  class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"
+        hx-post="vrticconnect/dodaj_aktivnost/"> Dodaj</button>
+        <button hx-get="vrticconnect/aktivnost_list/"  class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;">Odustani</button>
+      </form>
+    </div>

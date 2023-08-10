@@ -1,0 +1,36 @@
+<tbody 
+hx-target="this"
+hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>      
+  {% for user in users %}
+  {% csrf_token %}
+  <tr style="border-top: 1px solid #dbdbdb;">
+    <td class="align-middle text-center fw-bold">{{ user.first_name }}</td>
+    <td class="align-middle text-center fw-bold">{{ user.last_name }}</td>
+  </tr>
+  <tr>          
+    <td class="align-middle text-center">{{user.username}}</td>
+    <td class="align-middle text-center">{{user.email}}</td>
+  </tr>
+  <tr style="border-bottom: 2px solid #dbdbdb;">
+    <td colspan="2" style="text-align: center; vertical-align: middle;">
+      <button class="delete-btn ms-auto " style="border-radius: 0.4rem; border: solid 2px #dbdbdb; cursor: pointer;"
+      hx-confirm="Potvrdite brisanje korisnika" hx-delete="vrticconnect/{{ user.id }}/delete/">
+        <i class="fa fa-trash"></i>
+      </button>
+      <button class="delete-btn ms-auto" style="border-radius: 0.4rem; border: solid 2px #dbdbdb; cursor: pointer;"
+      hx-get="vrticconnect/{{ user.id }}/profil_edit/">
+      <i class="fa fa-edit"></i>
+    </button>
+    </td>
+  </tr>
+  {% empty %}
+  <tr> 
+    <td >Nemate članova u grupi</td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td colspan="6" style="text-align: center; vertical-align: middle;"><a href="/signup/" class="btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"> Dodaj korisnika</a></td>
+  </tr>
+</tbody>
+
+

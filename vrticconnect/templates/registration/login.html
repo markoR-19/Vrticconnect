@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load widget_tweaks %}
+
+<div class="custom-bg d-flex align-items-center justify-content-center vh-100" style="background-image: url(https://images.unsplash.com/photo-1539795845756-4fadad2905ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=100); background-size: cover;">
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="fw-bold mb-4" style="font-size: 60px;">
+      Vrtić<span style="color: #ee8926;">C</span>onnect
+    </h1>
+    <div class="d-flex align-items-center justify-content-center bg-white p-4" style="border-radius: 0.8rem;">
+      <form method="post" class="text-center">
+        <h3 class="mb-2">Prijava</h3>
+        <div>
+          <p class="text-center">Dobro došli na portal VrtićConnect!<br>Prijavite se za pregled najnovijih<br>aktivnosti vrtićke grupe Vaše djece.</p>
+        </div>
+        {% csrf_token %}
+        <div class="mt-4 text-center">
+          {% render_field form.username placeholder="Korisničko ime" class="form-control text-center"%}
+        </div>
+        <div class="mt-4 text-center">
+          {% render_field form.password placeholder="Lozinka" class="form-control text-center"%}
+        </div>
+        <div class="mt-4 text-center">
+          <button class="btn logout-btn text-white btn-custom" type="submit" style=" border-radius: 0.4rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;">Prijavi se</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

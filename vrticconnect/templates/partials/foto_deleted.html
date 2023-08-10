@@ -1,0 +1,30 @@
+<div class="grid-sizer"></div>
+     {% for foto in fotografije %}
+     {% csrf_token %}
+         <div class="grid-item">
+           <img src="{{ foto.Fotografija.url }}" alt="{{ foto.Naslov }}" style="width: auto; max-height: 200px; object-fit: cover;"
+            class="shadow-1-strong rounded mb-4" />
+            <button class="delete-btn ms-auto " style="border-radius: 0.4rem; border: solid 2px #dbdbdb; cursor: pointer;"
+            hx-confirm="Potvrdite brisanje fotografije" hx-delete="/vrticconnect/{{ foto.id }}/foto_delete/" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+              <i class="fa fa-trash"></i>
+            </button>
+         </div>
+     {% endfor %}
+   </div>
+ </div>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script> <!-- Include imagesLoaded JavaScript -->
+ <script>
+   document.addEventListener("DOMContentLoaded", function() {
+       var grid = document.querySelector('.grid');
+       var masonry = new Masonry(grid, {
+           itemSelector: '.grid-item',
+           columnWidth: '.grid-sizer',
+           percentPosition: true
+       });
+
+       // Trigger Masonry layout after images are loaded
+       imagesLoaded(grid, function() {
+           masonry.layout();
+       });
+   });
+ </script>

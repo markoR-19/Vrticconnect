@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+    <div class="d-flex align-items-center justify-content-center p-4 pb-3 mb-2" style="background-color: whitesmoke; border-radius: 0.8rem; border: solid 2px #858585;">
+        <form method="post" class="text-center" enctype="multipart/form-data">
+                <h3 class="mb-2 fw-bold">Prenesi Fotografiju</h3>
+        {% csrf_token %}
+        {% if form.errors %}
+            <h3>Greska.</h3>
+        {% endif %}
+        <div class="mt-4 text-center">
+            {% render_field form.Naslov placeholder="Naslov" class="form-control text-center"%}
+        </div>
+        <div class="mt-4 text-center">
+            {% render_field form.Fotografija placeholder="Fotografija" class="form-control"%}
+        </div>
+        <input class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"
+         type="submit" value="Prenesi" />
+         <button @click="open = !open" class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"> Odustani</button>
+      </form>
+    </div>

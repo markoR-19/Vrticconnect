@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}VrticConnect Fotoalbum{% endblock %}
+{% block content %}
+{% include 'partials/navbar.html' %}
+<div class="row py-4 g-0 px-1 d-flex min-vh-100" style="background-image: url(https://img.freepik.com/free-vector/organic-flat-abstract-element-pattern_23-2148942926.jpg?w=780&t=st=1690621441~exp=1690622041~hmac=a30843eca56af0aff25f1f0c6cfb6c80a0b05219fbf211052ea90854e6fe3a14) ;
+  background-position: left top; background-attachment: fixed; margin-top: 40px;">
+  {% if fotografije%}
+  <div id="loader2" class="loader3 center-spinner">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  {% endif %}
+  <div >
+    <div class=" justify-content-between align-items-center">
+      <h1 class=" text-center fw-bold px-2 mt-1 me-auto " style="padding-top: 4px; text-decoration: underline #ee8926 3px;">Fotoalbum</h1>
+      {% if Zaposlen %}
+        <div x-data="{ open: false }" >
+          <div class="d-flex">
+            <button @click="open = !open " class= "delete-btn ms-auto mb-1 me-4" style=" border-radius: 0.4rem; border:solid 2px #dbdbdb; cursor: pointer;" ><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="mb-2 foto-div" x-show="open" @click.outside="open = false">
+            {% include 'vrticconnect/upload_foto.html' %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    {% if fotografije%}
+      <div id="foto" style="visibility: hidden;" class="px-4">
+        <div class="grid" style="display: flex; flex-wrap: wrap;">
+          <div class="grid-sizer"></div>
+            {% for foto in fotografije %}
+              <div class="grid-item" >
+                <img loading="lazy" src="{{ foto.Fotografija.url }}" alt="{{ foto.Naslov }}" class="img-thumbnail" >
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+      {% if fotografije.has_previous %}
+            <div class="text-center mt-2 mb-2">
+              <div class="d-flex justify-content-center">
+                <a class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"
+                        href="/vrticconnect/foto/?page={{ fotografije.previous_page_number }}" role="button" ><i class="fa fa-arrow-left"></i></a>
+              </div>
+            </div> 
+          {% endif %}
+          {% if fotografije.has_next %}
+            <div class="text-center mt-2 mb-2">
+              <div class="d-flex justify-content-center">
+                <a class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"
+                        href="/vrticconnect/foto/?page={{ fotografije.next_page_number }}" role="button" ><i class="fa fa-arrow-right"></i></a>
+              </div>
+            </div> 
+          {% endif %}
+    {% endif %}
+  </div>
+</div>
+<script>
+  var grid = document.querySelector('.grid');
+
+  var msnry = new Masonry( grid, {
+    itemSelector: '.grid-item',
+    columnWidth: '.grid-sizer',
+    percentPosition: true
+  });
+
+  imagesLoaded( grid ).on( 'done', function() {
+    // layout Masonry after each image loads
+    msnry.layout();
+    document.querySelector( "#loader2").style.visibility = "hidden";
+    document.querySelector( "#foto").style.visibility = "visible";
+  });
+
+</script>
+
+{% endblock %}

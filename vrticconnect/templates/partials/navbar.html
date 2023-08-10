@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg bg-custom py-1 fixed-top" style="background-color: white;">
+    <div class="container-fluid ">
+      <a class="navbar-brand fw-bold p-0" href="{% url 'vrticconnect:portal' %}" style="font-size: 32px;">Vrtić<span style="color: #ee8926;">C</span>onnect</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menucollapse" aria-controls="menucollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="line"></span> 
+        <span class="line"></span> 
+        <span class="line" style="margin-bottom: 0;"></span>
+      </button>
+      <div class="collapse navbar-collapse " id="menucollapse" style="font-size: 18px;">
+        <div class="navbar-nav ms-auto " >
+          <a class="nav-link h-100 mx-2" href="/vrticconnect/foto/">Fotoalbum</a>
+          <a class="nav-link h-100 mx-2" href="/vrticconnect/korisnik_profil/">Korisnički profil</a>
+          {% if Zaposlen %}
+          <a class="nav-link h-100 mx-2" href="/signup/">Dodaj korisnike</a>
+          {% endif %}
+          <div class="navbar-nav fw-bold" style="background-color: #ee8926; border-radius: 0.3rem;">
+            <a class="nav-link logout-btn h-100" href="{% url 'logout' %}">Odjavi se</a>
+        </div>
+        </div>
+      </div>
+    </div>
+</nav>

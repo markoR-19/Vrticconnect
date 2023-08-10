@@ -1,0 +1,33 @@
+<tbody 
+hx-target="this"
+hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>      
+  {% for aktivnost in aktivnosti %}
+  {% csrf_token %}
+    <tr style="border-top: 1px solid #dbdbdb;">
+        <td class="align-middle text-center fw-bold">{{ aktivnost.Naziv }}</td>
+        <td class="align-middle text-center">{{ aktivnost.Datum_aktivnosti }}</td>
+        {% if Zaposlen %}
+            <td>
+            <button class="delete-btn ms-auto " style="border-radius: 0.4rem; border: solid 2px #dbdbdb; cursor: pointer;"
+            hx-delete="vrticconnect/aktivnost_delete/{{ aktivnost.id }}/">
+            <i class="fa fa-trash"></i>
+            </button>
+            </td>
+        {% endif %}
+    </tr>
+  {% empty %}
+  <td>Nemate članova u grupi</td>
+  {% endfor %}
+  {% if Zaposlen %}
+  <tr style="border-bottom: 2px solid #dbdbdb;">
+      <td colspan="12" style="text-align: center; vertical-align: middle;">
+      <button class="mt-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;"
+      hx-get="vrticconnect/dodaj_aktivnost/">
+      Dodaj aktivnost
+      </button>
+      </td>
+  </tr>
+  {% endif %}
+</tbody>
+
+

@@ -1,0 +1,111 @@
+<div class="card d-flex align-items-center justify-content-center" style="border: none; height:550px; ">
+  <div style="overflow:auto; display:flex; flex-direction:column-reverse; width: 100%;">
+    <div class="card-body d-flex flex-column align-items-start" id="chat-log" style="background-color: #ececec; border-left: solid 2px #dfdddd; border-right: solid 2px #dfdddd; "></div>
+  </div>
+  <input id="chat-message-input" type="text" size="60" class="form-control mb-2">
+  <button id="chat-message-submit" class="btn logout-btn btn-custom mt-1" style="background-color: #ee8926; border-radius: 0.3rem; background-color: #ee8926;  font-size: 1.1rem;">Pošalji</button>
+</div>
+
+{{ request.user.username|json_script:"user_username" }}
+{{ grupa.Naziv|json_script:"grupa" }}
+
+{% if poruke %}
+  {% for poruka in poruke %}
+    <script>
+      var user_user = JSON.parse(document.getElementById('user_username').textContent);
+      var poruka_autor = '{{ poruka.Autor.username|escapejs }}';
+      var poruka_tekst = '{{ poruka.Tekst_poruka|escapejs }}';
+      var poruka_datum = '{{ poruka.Datum_objave|date:"d/m/Y, H:i" |escapejs }}';
+      var chatLog = document.querySelector('#chat-log');
+      var div = document.createElement('div');
+      var autorSpan = document.createElement('span');
+
+      autorSpan.textContent = poruka_autor;
+      autorSpan.style.color = 'grey';
+      autorSpan.style.fontSize = '0.8rem';
+
+      var infoSpan = document.createElement('span');
+      infoSpan.textContent = poruka_datum
+      infoSpan.style.color = 'grey';
+      infoSpan.style.fontSize = '0.8rem';
+      infoSpan.style.marginBottom = '8px';
+
+      div.textContent = poruka_tekst;
+      div.classList.add('chat-message');
+      if (poruka_autor === user_user) {
+        div.classList.add('chat-message-right');
+        div.classList.add('ms-auto');
+        autorSpan.classList.add('ms-auto');
+        infoSpan.classList.add('ms-auto');
+        div.classList.add('me-2');
+        autorSpan.classList.add('me-2');
+        infoSpan.classList.add('me-2');
+      }
+
+      document.querySelector('#chat-log').appendChild(div);
+      document.querySelector('#chat-log').appendChild(autorSpan);
+      document.querySelector('#chat-log').appendChild(infoSpan);
+    </script>
+  {% endfor %}
+{% endif %}
+
+<script>
+  const grupa = JSON.parse(document.getElementById('grupa').textContent);
+  const user_username = JSON.parse(document.getElementById('user_username').textContent);
+
+  const chatSocket = new WebSocket(
+    'ws://' +
+    window.location.host +
+    '/ws/vrticconnect/' +
+    grupa +
+    '/'
+  );
+
+  chatSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    const date = new Date();
+
+    const infoSpan = document.createElement('span');
+    infoSpan.textContent = date.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+    infoSpan.style.color = 'grey';
+    infoSpan.style.fontSize = '0.8rem';
+    infoSpan.style.marginBottom = '8px';
+
+    const autorSpan = document.createElement('span');
+    autorSpan.textContent = data.username;
+    autorSpan.style.color = 'grey';
+    autorSpan.style.fontSize = '0.8rem';
+
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = data.message;
+    messageDiv.classList.add('chat-message');
+    if (data.username === user_username) {
+        messageDiv.classList.add('chat-message-right');
+        messageDiv.classList.add('ms-auto');
+        autorSpan.classList.add('ms-auto');
+        infoSpan.classList.add('ms-auto');
+      }
+    document.querySelector('#chat-log').appendChild(messageDiv);
+    document.querySelector('#chat-log').appendChild(autorSpan);
+    document.querySelector('#chat-log').appendChild(infoSpan);
+  };
+
+  chatSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+  };
+
+  document.querySelector('#chat-message-input').onkeyup = function(e) {
+    if (e.keyCode === 13) {
+      document.querySelector('#chat-message-submit').click();
+    }
+  };
+  document.querySelector('#chat-message-submit').onclick = function(e) {
+    const messageInputDom = document.querySelector('#chat-message-input');
+    const message = messageInputDom.value;
+    chatSocket.send(JSON.stringify({
+      'message': message,
+      'username': user_username,
+    }));
+    messageInputDom.value = '';
+  };
+</script>
