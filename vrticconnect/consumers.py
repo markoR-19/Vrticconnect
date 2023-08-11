@@ -8,7 +8,6 @@ from django.utils import timezone
 class grupaConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.grupa = self.scope['url_route']['kwargs']['grupa']
-        #self.vrtic = self.scope['url_route']['kwargs']['vrtic']['grupa']
         self.grupa_naziv = 'chat_%s' % str(unidecode(self.grupa))
         
         await self.channel_layer.group_add(

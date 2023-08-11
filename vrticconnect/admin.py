@@ -9,6 +9,7 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = User
     list_display = ["email", "username",]
+
 # Register your models here.
 model_list = [User, Grupa, Vrtic, Objava, Aktivnost, Fotografija ]
 admin.site.register(model_list)

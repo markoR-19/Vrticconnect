@@ -6,7 +6,8 @@ from .models import User, Objava, Aktivnost, Fotografija
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ("username", "email", "Zaposlen", "Grupa", "first_name", "last_name")
+        fields = ("username", "email", "Zaposlen",
+                   "Grupa", "first_name", "last_name")
         exclude = ["password"]
 
 class CustomUserChangeForm(UserChangeForm):
