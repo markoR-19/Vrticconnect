@@ -15,6 +15,7 @@
 {% endif %}
 <div class="custom-bg d-flex align-items-center justify-content-center" style="background-image: url(https://img.freepik.com/free-vector/hand-painted-abstract-painting-pattern-design_23-2148986984.jpg?w=1550&t=st=1690621450~exp=1690622050~hmac=4503fbf6d0877fa732d5df5016e80633a53bac652ab822155294f5f53f224ce0);
  background-position: center top; background-attachment: fixed; min-height:100vh; margin-top: 50px; margin-bottom: 10px;" >
+  {% if Zaposlen %}
     <div class="d-flex align-items-center justify-content-center p-4 m-3" style="background-color: whitesmoke; border-radius: 0.8rem; border: solid 2px #858585;">
       <div class="d-flex flex-column align-items-center">
       <h2>Dodaj korisnika</h2>
@@ -59,6 +60,7 @@
       </form>
     </div>
   </div>
+  {% endif %}
 </div>
 
 {% endblock %}

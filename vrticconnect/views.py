@@ -37,8 +37,8 @@ def SignUpView(request):
 @login_required
 def portal(request):
     grupa = getattr(User.objects.get(username=request.user.username), "Grupa")
-    objave_lista = Objava.objects.filter(Grupa__Naziv__contains=grupa).order_by("-Datum_objave")
     Zaposlen =  getattr(User.objects.get(username=request.user.username), "Zaposlen")
+    objave_lista = Objava.objects.filter(Grupa__Naziv__contains=grupa).order_by("-Datum_objave")
     paginator = Paginator(objave_lista, 4)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -95,7 +95,6 @@ def delete_objava(request, id):
     context = {'Zaposlen':Zaposlen, "page_obj": page_obj, 'grupa':grupa, 'users':users}
     return render(request, 'partials/objave.html', context)
 
-@require_http_methods(['DELETE'])
 def objava_edit(request, id):
     objava = Objava.objects.get(id=id)
     grupa = getattr(User.objects.get(username=request.user.username), "Grupa")
@@ -112,7 +111,7 @@ def objava_edit(request, id):
     else:
         form = ObjavaForm(instance=objava)
     context={'grupa':grupa, 'form': form, 'Zaposlen':Zaposlen, 'id':id}
-    return render(request, 'vrticconnect/dodaj_objavu.html', context)
+    return render(request, 'partials/dodaj_objavu.html', context)
 
 @login_required
 def dodaj_objavu(request):
@@ -132,7 +131,7 @@ def dodaj_objavu(request):
     else:
         form = ObjavaForm()
     context={'grupa':grupa, 'form': form, 'Zaposlen':Zaposlen}
-    return render(request, 'vrticconnect/dodaj_objavu.html', context)
+    return render(request, 'partials/dodaj_objavu.html', context)
 
 def chat(request):
     Zaposlen =  getattr(User.objects.get(username=request.user.username), "Zaposlen")

@@ -2,9 +2,9 @@
     <div class="align-items-center justify-content-center p-4 pb-3 mb-2" style="background-color: whitesmoke; border-radius: 0.8rem; border: solid 2px #858585;">
         <form method="post" class="text-center" enctype="post">
             {% if id %}
-                <h2 class="mb-2 fw-bold">Uredi objavu</h2>
+                <h2 class="mb-2 fw-bold">Uredi obavijest</h2>
             {% else %}
-                <h2 class="mb-2 fw-bold">Dodaj objavu</h2>
+                <h2 class="mb-2 fw-bold">Dodaj obavijest</h2>
             {% endif %}
         {% csrf_token %}
         {% if form.errors %}

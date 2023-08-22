@@ -15,7 +15,7 @@
           <button @click="open = !open " class= "delete-btn ms-auto mb-1" style=" border-radius: 0.4rem; border:solid 2px #dbdbdb; cursor: pointer;" ><i class="fa fa-plus"></i></button>
         </div>
         <div class="mb-4 " x-show="open" @click.outside="open = false">
-          {% include 'vrticconnect/dodaj_objavu.html' %}
+          {% include 'partials/dodaj_objavu.html' %}
         </div>
       </div>
       {% endif %}

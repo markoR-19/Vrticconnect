@@ -21,7 +21,7 @@
             <button @click="open = !open " class= "delete-btn ms-auto mb-1 me-4" style=" border-radius: 0.4rem; border:solid 2px #dbdbdb; cursor: pointer;" ><i class="fa fa-plus"></i></button>
           </div>
           <div class="mb-2 foto-div" x-show="open" @click.outside="open = false">
-            {% include 'vrticconnect/upload_foto.html' %}
+            {% include 'partials/upload_foto.html' %}
           </div>
         </div>
       {% endif %}
