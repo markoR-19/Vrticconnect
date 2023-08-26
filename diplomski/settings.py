@@ -156,18 +156,16 @@ if STORAGE_DESTINATION == 's3':
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATIC_ROOT = 'https://vrticconnect-bucket.s3.eu-north-1.amazonaws.com/static/'
     
-    # public media settings
     PUBLIC_MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'diplomski.storage_backends.MediaStorage'
 else:
-    # media files
+    # Media files
     MEDIA_ROOT = os.path.join(BASE_DIR, 'vrticconnect', 'media')
     MEDIA_URL = 'vrticconnect/media/'
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'vrticconnect', 'static'),

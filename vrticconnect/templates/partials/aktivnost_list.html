@@ -5,7 +5,7 @@ hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
   {% csrf_token %}
     <tr style="border-top: 1px solid #dbdbdb;">
         <td class="align-middle text-center fw-bold">{{ aktivnost.Naziv }}</td>
-        <td class="align-middle text-center">{{ aktivnost.Datum_aktivnosti }}</td>
+        <td class="align-middle text-center">{{ aktivnost.Datum_aktivnosti|date:"d.m.Y" }}</td>
         {% if Zaposlen %}
             <td>
             <button class="delete-btn ms-auto " style="border-radius: 0.4rem; border: solid 2px #dbdbdb; cursor: pointer;"
@@ -16,7 +16,7 @@ hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         {% endif %}
     </tr>
   {% empty %}
-  <td>Nemate članova u grupi</td>
+  <td>Skupina nema zakazanih aktivnosti</td>
   {% endfor %}
   {% if Zaposlen %}
   <tr style="border-bottom: 2px solid #dbdbdb;">

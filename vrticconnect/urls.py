@@ -23,6 +23,5 @@ urlpatterns = [
     path('vrticconnect/aktivnost_list/', aktivnost_list, name='aktivnost_list'),
     path('vrticconnect/user_list/', user_list, name='user_list'),
     path('vrticconnect/foto/', foto, name='foto'),
-    path('vrticconnect/<int:id>/foto_delete/', foto_delete, name='foto_delete'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

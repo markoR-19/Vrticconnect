@@ -1,14 +1,18 @@
 <div class="card d-flex align-items-center justify-content-center" style="border: none; height:550px; ">
   <div style="overflow:auto; display:flex; flex-direction:column-reverse; width: 100%;">
+     <!-- prikaz poruka -->
     <div class="card-body d-flex flex-column align-items-start" id="chat-log" style="background-color: #ececec; border-left: solid 2px #dfdddd; border-right: solid 2px #dfdddd; "></div>
   </div>
+       <!-- unos poruke -->
   <input id="chat-message-input" type="text" size="60" class="form-control mb-2">
+       <!-- slanje poruke -->
   <button id="chat-message-submit" class="btn logout-btn btn-custom mt-1" style="background-color: #ee8926; border-radius: 0.3rem; background-color: #ee8926;  font-size: 1.1rem;">Pošalji</button>
 </div>
 
 {{ request.user.username|json_script:"user_username" }}
 {{ grupa.Naziv|json_script:"grupa" }}
 
+     <!-- učitavanje i prikaz poruka iz varijable poruke -->
 {% if poruke %}
   {% for poruka in poruke %}
     <script>
@@ -48,11 +52,11 @@
     </script>
   {% endfor %}
 {% endif %}
-
+     <!-- primanje i slanje poruka -->
 <script>
   const grupa = JSON.parse(document.getElementById('grupa').textContent);
   const user_username = JSON.parse(document.getElementById('user_username').textContent);
-
+  // povezivanje s web utičnicom
   const chatSocket = new WebSocket(
     'wss://' +
     window.location.host +
@@ -60,7 +64,7 @@
     grupa +
     '/'
   );
-
+  // primanje novih poruka
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     const date = new Date();
@@ -89,7 +93,7 @@
     document.querySelector('#chat-log').appendChild(autorSpan);
     document.querySelector('#chat-log').appendChild(infoSpan);
   };
-
+  // prekidanje veze s web utičnicom
   chatSocket.onclose = function(e) {
     console.error('Chat socket closed unexpectedly');
   };
@@ -99,6 +103,7 @@
       document.querySelector('#chat-message-submit').click();
     }
   };
+  // slanje poruke
   document.querySelector('#chat-message-submit').onclick = function(e) {
     const messageInputDom = document.querySelector('#chat-message-input');
     const message = messageInputDom.value;
@@ -108,4 +113,5 @@
     }));
     messageInputDom.value = '';
   };
+
 </script>

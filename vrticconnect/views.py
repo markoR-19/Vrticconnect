@@ -27,7 +27,10 @@ def SignUpView(request):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.save()
-            return redirect("/signup/")
+            dodan_korisnik = True
+            form = CustomUserCreationForm(request.POST)
+            context={'grupa':grupa, 'Zaposlen':Zaposlen, 'form': form, 'dodan_korisnik':dodan_korisnik}
+            return render(request, "registration/signup.html", context)
 
     else:
         form = CustomUserCreationForm()
@@ -121,11 +124,7 @@ def dodaj_objavu(request):
         form = ObjavaForm(request.POST)
 
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.Autor = User.objects.get(username=request.user.username)
-            obj.Grupa = grupa
-            obj.Datum_objave = timezone.now()
-            obj.save()
+            form.save()
             return redirect("/")
 
     else:
@@ -137,7 +136,7 @@ def chat(request):
     Zaposlen =  getattr(User.objects.get(username=request.user.username), "Zaposlen")
     grupa =  getattr(User.objects.get(username=request.user.username), "Grupa")
     poruke = []
-    poruke = Poruka.objects.filter(Grupa__Naziv__contains=grupa).order_by('-Datum_objave')[:10]
+    poruke = Poruka.objects.filter(Grupa__Naziv__contains=grupa).order_by('-Datum_objave')
     context = {'Zaposlen':Zaposlen,'grupa':grupa, 'poruke':poruke}
     return render(request, 'partials/chat.html', context)
         
@@ -174,7 +173,6 @@ def profil_edit(request, id):
 
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = 'vrticconnect/password_change_form.html'
-    success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('vrticconnect:korisnik_profil')
 
 def dodaj_aktivnost(request):
@@ -198,10 +196,13 @@ def dodaj_aktivnost(request):
     context={'grupa':grupa, 'form': form, 'Zaposlen':Zaposlen}
     return render(request, 'partials/dodaj_aktivnost.html', context)
 
+@require_http_methods(['DELETE'])
 def aktivnost_delete(request, id):
-    grupa = getattr(User.objects.get(username=request.user.username), "Grupa")
     Aktivnost.objects.filter(id=id).delete()
-    aktivnosti = Aktivnost.objects.filter(Grupa__Naziv__contains=grupa).order_by('Datum_aktivnosti')
+    grupa = getattr(User.objects.get(username=request.user.username), "Grupa")
+    start_date =  date.today() - timedelta(days=14)
+    end_date = date.today() + timedelta(weeks=25)
+    aktivnosti = Aktivnost.objects.filter(Grupa__Naziv__contains=grupa).filter(Datum_aktivnosti__range=(start_date, end_date)).order_by('Datum_aktivnosti')
     Zaposlen =  getattr(User.objects.get(username=request.user.username), "Zaposlen")
     context={'grupa':grupa, 'aktivnosti': aktivnosti, 'Zaposlen':Zaposlen}
     return render(request, 'partials/aktivnost_list.html',context)
@@ -244,13 +245,3 @@ def foto(request):
         form = FotoForm()
     context = {'Zaposlen':Zaposlen,'grupa':grupa, 'fotografije': page_obj, 'form':form}
     return render(request, 'vrticconnect/foto.html', context)
-
-@require_http_methods(['DELETE'])
-def foto_delete(request, id):
-    grupa = getattr(User.objects.get(username=request.user.username), "Grupa")
-    Zaposlen =  getattr(User.objects.get(username=request.user.username), "Zaposlen")
-    Fotografija.objects.filter(id=id).delete()
-    fotografije = Fotografija.objects.filter(Grupa__Naziv__contains=grupa)
-    print(fotografije)
-    context = {'Zaposlen':Zaposlen,'grupa':grupa, 'fotografije': fotografije}
-    return render(request, 'partials/foto_deleted.html', context)

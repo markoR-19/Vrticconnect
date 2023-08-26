@@ -18,6 +18,9 @@
   {% if Zaposlen %}
     <div class="d-flex align-items-center justify-content-center p-4 m-3" style="background-color: whitesmoke; border-radius: 0.8rem; border: solid 2px #858585;">
       <div class="d-flex flex-column align-items-center">
+      {% if dodan_korisnik %}
+      <h2> Korisnik je uspješno dodan!</h2>
+      {% endif %}
       <h2>Dodaj korisnika</h2>
       <form method="post" class="text-center">
         {% csrf_token %}
@@ -55,7 +58,8 @@
           {% render_field form.password2 placeholder="ponovi lozinku" class="form-control text-center"%}
         </div>
         <div class="mt-2 text-center">
-          <button class="btn logout-btn text-white btn-custom" type="submit" style=" border-radius: 0.4rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;">Dodaj</button>
+          <button class="btn logout-btn text-white btn-custom" type="submit" style=" border-radius: 0.4rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;">Dodaj korisnika</button>
+          <a href="{% url 'vrticconnect:portal' %}" class=" my-2 btn logout-btn btn-custom" style=" border-radius: 0.3rem; border-width: 2px; background-color: #ee8926;  font-size: 1.2rem;">Odustani</a>
         </div>
       </form>
     </div>
